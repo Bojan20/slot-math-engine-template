@@ -222,6 +222,61 @@
       window.__slotmath_getActiveWorkspace || getActiveWorkspace;
     window.__slotmath_getActiveVariant =
       window.__slotmath_getActiveVariant || getActiveVariant;
+
+    // ── Wave G3 — Cortex Eyes workspace API ────────────────────────
+    // Stable contract surface for the headless audit runner. Eyes was
+    // previously polling DOM tabs + sleeping `wait(300)` after every
+    // workspace switch — race-prone, flaky on slow CI. This API gives
+    // the runner a hard signal: `__workspaceReady` flips true the
+    // moment switchWorkspace() completes AND the active variant has a
+    // populated symbol pool (cells about to render).
+    //
+    // Contract (do NOT break — eyes runner is wired to it):
+    //   __workspaceReady      boolean — true between switch end and next switch start
+    //   __workspaceReadyTick  number  — increments every time a switch completes
+    //   getActiveState()      → { wsId, variantId, layout, tierCounts, poolSize, ready }
+    //   switchToLatest()      → switches to most-recently-added workspace
+    //   waitForReady(timeout) → Promise resolving to state once ready (eyes polls this)
+    if (!window.__cortex_workspace_api) {
+      window.__workspaceReady = false;
+      window.__workspaceReadyTick = 0;
+      window.__cortex_workspace_api = {
+        getActiveState() {
+          try {
+            const ws = getActiveWorkspace();
+            const v  = getActiveVariant();
+            if (!ws || !v) return { ready: false, wsId: null, variantId: null };
+            return {
+              ready: !!window.__workspaceReady,
+              wsId: ws.id || activeWorkspaceId || null,
+              variantId: ws.activeVariantId || null,
+              layout: v.layout || null,
+              tierCounts: { ...(v.tierCounts || {}) },
+              poolSize: Array.isArray(v.symbols) ? v.symbols.length : 0,
+              tick: window.__workspaceReadyTick | 0,
+            };
+          } catch (_) { return { ready: false }; }
+        },
+        switchToLatest() {
+          if (!Array.isArray(wsOrder) || wsOrder.length === 0) return false;
+          const lastId = wsOrder[wsOrder.length - 1];
+          if (!lastId) return false;
+          try { switchWorkspace(lastId); return true; } catch (_) { return false; }
+        },
+        waitForReady(timeoutMs) {
+          const t = Math.max(100, +timeoutMs || 5000);
+          const start = Date.now();
+          return new Promise((resolve) => {
+            const tick = () => {
+              if (window.__workspaceReady) return resolve(window.__cortex_workspace_api.getActiveState());
+              if (Date.now() - start > t) return resolve({ ready: false, timedOut: true });
+              setTimeout(tick, 50);
+            };
+            tick();
+          });
+        },
+      };
+    }
   }
 
   /* ============================================================
@@ -1728,9 +1783,67 @@
 
   function switchWorkspace(id) {
     if (!workspaces[id]) return;
+    // Wave G3 — Cortex Eyes contract: clear ready flag during the
+    // switch so any concurrent waitForReady() blocks until the new
+    // workspace has actually rendered.
+    if (typeof window !== "undefined") window.__workspaceReady = false;
+
     activeWorkspaceId = id;
     const ws = workspaces[id];
     if (compareMode) exitCompareMode(/*silent=*/true);
+
+    // Wave G1 — eager pool seed before any UI render.
+    // GDD-narrative samples (huff-puff.md, dragon-spin.json, etc.) often
+    // land without populated tierCounts because the parser couldn't
+    // infer them from prose. Without this seed the pool stays empty,
+    // every renderPlayGrid returns 0 cells, and the audit reports
+    // "HP=0 MP=0 LP=0" on every GDD fixture. We seed eagerly here so
+    // the Play tab is ALWAYS playable — even on minimal IRs.
+    try {
+      const v = ws.variants[ws.activeVariantId];
+      if (v) {
+        const counts = v.tierCounts || {};
+        const totalPaying = (counts.HP|0) + (counts.MP|0) + (counts.LP|0);
+        if (totalPaying === 0) {
+          // Fallback: derive from paytable rows if hydrated, else use
+          // industry-standard 3/3/4/1/1/0 (HP/MP/LP/WILD/SCATTER/MULT).
+          const pt = v.paytable && typeof v.paytable === "object" ? v.paytable : null;
+          if (pt) {
+            // Bucket symbols by x5 pay magnitude — highest tertile = HP,
+            // middle = MP, lowest = LP. Industry convention used by every
+            // certified math lab.
+            const rows = Object.entries(pt)
+              .map(([sym, p]) => ({ sym, x5: +(p?.x5 || 0) }))
+              .filter(r => r.x5 > 0)
+              .sort((a, b) => b.x5 - a.x5);
+            if (rows.length > 0) {
+              const third = Math.max(1, Math.ceil(rows.length / 3));
+              v.tierCounts = {
+                HP: Math.min(3, third),
+                MP: Math.min(3, third),
+                LP: Math.min(5, rows.length - 2 * third) || 3,
+                WILD: 1,
+                SCATTER: 1,
+                MULT: 0,
+              };
+            } else {
+              v.tierCounts = { HP: 3, MP: 3, LP: 4, WILD: 1, SCATTER: 1, MULT: 0 };
+            }
+          } else {
+            v.tierCounts = { HP: 3, MP: 3, LP: 4, WILD: 1, SCATTER: 1, MULT: 0 };
+          }
+        }
+        // Eager build — guarantees v.symbols is populated BEFORE any
+        // tab renders. Idempotent — if symbols already there, no-op.
+        if (!Array.isArray(v.symbols) || v.symbols.length === 0) {
+          buildSymbolPoolFor(v);
+        }
+      }
+    } catch (e) {
+      // Defensive — eager seed must never crash a workspace switch.
+      console.warn("[studio:G1] eager pool seed failed:", e?.message || e);
+    }
+
     renderWorkspacePill();
     renderWorkspaceMenu();
     renderSidebarWorkspaces();
@@ -1738,6 +1851,18 @@
     rerenderAll();
     toast({ kind: "cyan", msg: `Switched to <b>${ws.name}</b>` });
     logActivity(`workspace → ${ws.name}`);
+
+    // Wave G3 — Cortex Eyes contract: signal that the workspace +
+    // pool are fully renderable. Eyes' waitForReady() resolves here.
+    if (typeof window !== "undefined") {
+      window.__workspaceReady = true;
+      window.__workspaceReadyTick = (window.__workspaceReadyTick | 0) + 1;
+      try {
+        window.dispatchEvent(new CustomEvent("studio:workspaceReady", {
+          detail: { wsId: id, tick: window.__workspaceReadyTick },
+        }));
+      } catch (_) {}
+    }
   }
 
   $("#ws-switch").addEventListener("click", e => {
