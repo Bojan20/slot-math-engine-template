@@ -8,7 +8,7 @@
 >
 > **Created**: 2026-06-08 (post-Wave H3, post-`cba1bbcc` first audit ship).
 >
-> **Last updated**: 2026-06-08 · **HEAD**: `ad56ed0` (slot-gdd-factory) / `a9b56856` (slot-math-engine-template/web/studio).
+> **Last updated**: 2026-06-08 · **HEAD**: `ad56ed0` (slot-gdd-factory) / `fdee2aad` (slot-math-engine-template/web/studio).
 >
 > **Most recent ship**: Wave **G5+G6 batch** — synthetic IR factory (25 vendor-neutral templates × 4 topology kinds + Cartesian eval × pool depth) + eval-pattern parity contract (`window.__active_eval_kind` + 16th assert + feature-tag boost in GDD-narrative inference). **1348/1348 PASS (100%)** total: 598/598 baseline + 750/750 synth-only.
 
@@ -134,8 +134,8 @@
 | Vendor-neutral synth templates | ✅ no franchise names |
 | JSDoc-documented `--synth` flag + generator purpose | ✅ |
 | Master TODO row flipped (G5/G6 → ✅) | ✅ |
-| Hash pin | ⏳ next commit |
-| Push origin/main | ⏳ this commit |
+| Hash pin | ✅ `fdee2aad` |
+| Push origin/main | ✅ `c2e47b37..fdee2aad` |
 
 ---
 
