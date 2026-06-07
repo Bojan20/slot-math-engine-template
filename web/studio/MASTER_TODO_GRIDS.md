@@ -8,7 +8,7 @@
 >
 > **Created**: 2026-06-08 (post-Wave H3, post-`cba1bbcc` first audit ship).
 >
-> **Last updated**: 2026-06-08 · **HEAD**: `ad56ed0` (slot-gdd-factory) / `_pending_` (slot-math-engine-template/web/studio).
+> **Last updated**: 2026-06-08 · **HEAD**: `ad56ed0` (slot-gdd-factory) / `48e3a38b` (slot-math-engine-template/web/studio).
 >
 > **Most recent ship**: Wave **G1+G2+G3 batch** — 257/280 → **280/280 PASS (100%)**. Eager pool seed (G1), `window.__cortex_workspace_api` contract (G3), mobile click + Cochran rule (G2). All 23 known fail closed.
 
@@ -111,8 +111,8 @@
 | Vendor-neutral source | ✅ no franchise/vendor strings in changes |
 | Commit message format | ✅ `feat(studio-grids): G1+G2+G3 — 280/280 PASS (100%)` |
 | Master TODO row flipped | ✅ G1/G2/G3 → shipped |
-| Hash pin | ⏳ next commit |
-| Push origin/main | ⏳ this commit |
+| Hash pin | ✅ `48e3a38b` |
+| Push origin/main | ✅ `f45bc650..48e3a38b` |
 
 ---
 
