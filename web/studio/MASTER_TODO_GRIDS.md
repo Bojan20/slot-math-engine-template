@@ -8,7 +8,7 @@
 >
 > **Created**: 2026-06-08 (post-Wave H3, post-`cba1bbcc` first audit ship).
 >
-> **Last updated**: 2026-06-08 · **HEAD**: `ad56ed0` (slot-gdd-factory) / `fdee2aad` (slot-math-engine-template/web/studio).
+> **Last updated**: 2026-06-08 · **HEAD**: `ad56ed0` (slot-gdd-factory) / `92838eff` (slot-math-engine-template/web/studio).
 >
 > **Most recent ship**: Wave **G8+G9+G10+G11 (P2 a11y batch)** — axe-core WCAG color-contrast (G8), Space-key spin handler + force-active guard (G9), ARIA grid/gridcell/aria-live contract (G10), prefers-reduced-motion CSS guard with universal `*` override (G11). Asserts/fixture 15 → **21** (+6 a11y). **838/838 PASS (100%)** baseline.
 
@@ -120,8 +120,8 @@
 | Run-time delta within budget (256 s → 333 s, +30%) | ✅ |
 | Vendor-neutral | ✅ |
 | Master TODO row flipped (G8/G9/G10/G11 → ✅) | ✅ |
-| Hash pin | ⏳ next commit |
-| Push origin/main | ⏳ this commit |
+| Hash pin | ✅ `92838eff` |
+| Push origin/main | ✅ `fd45a181..92838eff` |
 
 ---
 
