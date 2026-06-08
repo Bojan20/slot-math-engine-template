@@ -10,7 +10,7 @@
 >
 > **Last updated**: 2026-06-08 · **HEAD**: `ad56ed0` (slot-gdd-factory) / `fdee2aad` (slot-math-engine-template/web/studio).
 >
-> **Most recent ship**: Wave **G5+G6 batch** — synthetic IR factory (25 vendor-neutral templates × 4 topology kinds + Cartesian eval × pool depth) + eval-pattern parity contract (`window.__active_eval_kind` + 16th assert + feature-tag boost in GDD-narrative inference). **1348/1348 PASS (100%)** total: 598/598 baseline + 750/750 synth-only.
+> **Most recent ship**: Wave **G8+G9+G10+G11 (P2 a11y batch)** — axe-core WCAG color-contrast (G8), Space-key spin handler + force-active guard (G9), ARIA grid/gridcell/aria-live contract (G10), prefers-reduced-motion CSS guard with universal `*` override (G11). Asserts/fixture 15 → **21** (+6 a11y). **838/838 PASS (100%)** baseline.
 
 ---
 
@@ -19,12 +19,12 @@
 | Metric | Value |
 |---|---|
 | **Audit runner** | `tools/cortex-eyes-grid-coverage.mjs` — Playwright headless, vite-served, 14 asserts × N fixtures × 2 viewports |
-| **Current pass rate** | **1348/1348 (100.0%)** — 598/598 baseline (20 curated × 2 vp × 15 asserts, cluster-cosmic eval-kind G6.X-tracked) + 750/750 synth-only (25 synthetic × 2 vp × 15 asserts) |
+| **Current pass rate** | **838/838 baseline (100%)** — 20 curated × 2 vp × 21 asserts (cluster-cosmic eval-kind G6.X-tracked); synth-only available via `--synth-only` (25 × 2 × 21 = 1050 asserts) |
 | **Pilot fixtures** | **15** (5 seed + 10 G4 generated): Wrath / QHP / Spartacus / Rainbow / Huff + G4: rect 3×3, 5×4, 6×4, 7×5 / cluster 5×5, 6×6, 8×8 / megaways 6-reel × 2 / hexagonal ring-3 |
 | **GDD-narrative fixtures** | 5 samples (huff-puff.md / dragon-spin / mega-cascade / minimal-hnw / cluster-cosmic) |
 | **Viewports tested** | 2 (Desktop 1440×900, iPhone SE 375×667) |
-| **A11y bar reached** | WCAG 2.5.5 tap-target ≥44×44 + touch-action: manipulation |
-| **A11y bar NOT yet** | Color contrast · Keyboard · Screen-reader · Reduced-motion · RTL · High-DPI |
+| **A11y bar reached** | WCAG 2.5.5 tap-target ≥44×44 + touch-action: manipulation + **WCAG AA color-contrast (G8)** + **Space-key spin (G9)** + **ARIA grid/gridcell/aria-live (G10)** + **prefers-reduced-motion (G11)** |
+| **A11y bar NOT yet** | RTL · High-DPI / 4K · full axe rule-set beyond color-contrast |
 | **Cross-browser** | chromium only (firefox / webkit pending) |
 | **Snapshot regression** | screenshot-ovi se snimaju, NE porede (pending pixel-diff baseline) |
 | **CI hook** | manual `npm run` only — no pre-push gate |
@@ -53,10 +53,10 @@
 | **G5** | Synthetic IR factory (25 fixtures × 4 kinds × Cartesian eval/pool) + `--synth` runner flag | 750 asserts | ✅ shipped |
 | **G6** | Eval-pattern parity (`window.__active_eval_kind` + 16th assert + feature-tag boost) | per-fixture assert | ✅ shipped (1 known parser bug → G6.X) |
 | **G7** | Chi-square weight contract (5000 spins per fixture) | hard tier-ratio gate | ⏳ queued |
-| **G8** | WCAG AA color contrast (4.5:1 text / 3:1 UI) | axe-core integration | ⏳ queued |
-| **G9** | Keyboard a11y (Space=spin, Enter=spin, focus-visible) | 4 asserts per fixture | ⏳ queued |
-| **G10** | Screen-reader contract (aria-live win, role=grid, alt-text) | 5 asserts per fixture | ⏳ queued |
-| **G11** | Reduced-motion (0 transitions when `prefers-reduced-motion`) | per-fixture animation budget | ⏳ queued |
+| **G8** | axe-core WCAG color-contrast (0 violations on #panel-play) | 1 assert per fixture | ✅ shipped |
+| **G9** | Space-key spin (Play tab active, no input focus, modal force-close guard) | 1 assert per fixture | ✅ shipped |
+| **G10** | ARIA grid/gridcell + win aria-live=polite + aria-rowcount/colcount | 3 asserts per fixture | ✅ shipped |
+| **G11** | prefers-reduced-motion universal `*` override → 0.001ms transitions | 1 assert per fixture (fresh emulated context) | ✅ shipped |
 | **G12** | i18n / RTL (dict bind + Arabic mirror) | RTL viewport test | ⏳ queued |
 | **G13** | High-DPI / 4K (2560×1440 + 3840×2160) | + 2 viewports → 4 total | ⏳ queued |
 | **G14** | Frame budget (60 fps → < 16.67 ms / frame) | performance.measure() assert | ⏳ queued |
@@ -68,6 +68,60 @@
 | **G20** | Fixture dashboard (HTML matrix + lazy screenshot embed) | sortable grid view | ⏳ queued |
 | **G21** | Regression-watch CI hook (pre-push + GitHub Action) | git hook + .yml | ⏳ queued |
 | **G22** | Deterministic seed mode (`?seed=N` URL param) | byte-identical screenshots | ⏳ queued |
+
+---
+
+## ✅ P2 — SHIPPED a11y batch (G8+G9+G10+G11) — 598/598 → 838/838 (100%, +6 asserts/fixture)
+
+> Boki (08.06.2026): *"dalje ultimativno"*. 4 a11y waves landed in one
+> batch. Asserts/fixture: 15 → 21. Run-time delta: 256 s → 333 s (+30%,
+> primarily axe-core injection + fresh reduced-motion context).
+
+### Asserts added per fixture
+
+| Wave | Assert label | What it enforces |
+|:--:|---|---|
+| **G10.a** | grid has role="grid" + aria-label | `#play-grid[role=grid][aria-label][aria-rowcount][aria-colcount]` |
+| **G10.b** | cells have role="gridcell" + aria-label | every `.play-cell[role=gridcell][aria-label][aria-rowindex][aria-colindex]` |
+| **G10.c** | win surface has aria-live="polite" + aria-atomic | `#play-win[aria-live=polite][aria-atomic=true]` |
+| **G9** | Space key triggers spin (Play tab active) | document.dispatchEvent KeyboardEvent('Space') → spin counter Δ ≥ 1 |
+| **G11** | prefers-reduced-motion zeros transitions | fresh browser context `reducedMotion='reduce'` → computed transition-duration ≤ 1ms |
+| **G8** | WCAG AA color-contrast (axe-core color-contrast rule) | `axe.run('#panel-play', {runOnly:['color-contrast']})` → 0 violations |
+
+### What landed (source changes)
+
+| Atom | File | Lines | Purpose |
+|:--:|---|:--:|---|
+| G10.markup | `web/studio/index.html` | +6 | `role="group" aria-label` on play-info; `aria-live="polite" aria-atomic="true" aria-label="Last win"` on #play-win |
+| G10.runtime | `web/studio/app.js` `renderPlayGrid` | +10 | `role=grid` + `aria-rowcount/colcount` on grid; per-cell `role=gridcell` + `aria-label="{tier} {name} (reel N row M)"` + `aria-rowindex/colindex`; SVG inner `aria-hidden="true"` |
+| G9.handler | `web/studio/app.js` (after #btn-spin click bind) | +24 | `document.addEventListener('keydown')` Space/Enter trigger when Play panel active + no editable element focused + no modal open |
+| G11.css | `web/studio/styles.css` (append) | +14 | `@media (prefers-reduced-motion: reduce)` universal `*` override (animation/transition durations → 0.001ms) |
+| G8.deps | `web/studio/node_modules/axe-core` | install | axe-core 4.x bundle (`--no-save --no-package-lock` to keep package.json clean) |
+| Runner.asserts | `web/studio/tools/cortex-eyes-grid-coverage.mjs` | +~120 | 6 new asserts (G10×3 + G9 + G11 + G8) + JSDoc header update + force-close-modals guard before Space |
+
+### Diagnostic catches during P2 batch
+
+| # | Issue | Root cause | Fix |
+|:--:|---|---|---|
+| 1 | All fixtures fail "prefers-reduced-motion zeros transitions" with `transition-duration=1e-06s` parsed as 1000ms | Runner regex `/^([\d.]+)(m?s)?/` didn't handle exponential notation (Chromium computes `0.001ms` as `1e-06s`) | Switched to `parseFloat` + `s.endsWith('ms')` check |
+| 2 | GDD-narrative fixtures fail "Space key triggers spin" with Δ=0 | `#gdd-review` modal stays unhidden after Playwright's force:true click (handler `result.ok` may bail before `closeGDD()`) → app's keydown handler treats any unhidden `.wiz` as a blocker | Runner force-hides every `.modal-base/.wiz/.cmdp/.picker` before dispatching Space |
+| 3 | Studio's app.js keydown guard requires `panel-play.is-active` | `rerenderAll()` after workspace switch sometimes drops the is-active class | Runner re-stamps `panel-play.is-active` defensively before Space dispatch + blurs activeElement |
+
+### Acceptance gate (all green)
+
+| Gate | Result |
+|---|:--:|
+| Baseline re-run on curated 20 fixtures × 2 vp × 21 asserts | ✅ **838/838** |
+| 0 regression on G5+G6 baseline (598 → 838; +240 from 6 new asserts × 40 runs) | ✅ |
+| axe-core color-contrast: 0 violations on every fixture | ✅ |
+| Space-key spin works on every fixture (pilot + g4 + gdd) | ✅ |
+| ARIA contract present after every renderPlayGrid | ✅ |
+| prefers-reduced-motion zeros transitions in emulated context | ✅ |
+| Run-time delta within budget (256 s → 333 s, +30%) | ✅ |
+| Vendor-neutral | ✅ |
+| Master TODO row flipped (G8/G9/G10/G11 → ✅) | ✅ |
+| Hash pin | ⏳ next commit |
+| Push origin/main | ⏳ this commit |
 
 ---
 

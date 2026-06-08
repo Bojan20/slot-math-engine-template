@@ -691,12 +691,17 @@
 
         <div id="single-play">
         <div class="play-area">
+          <!-- Wave G10 — Screen-reader: play-grid gets role=grid + aria-* at runtime (renderPlayGrid) -->
           <div class="play-grid" id="play-grid"></div>
-          <div class="play-info">
-            <div class="play-stat"><span class="caps">last win</span><b class="mono" id="play-win">0×</b></div>
-            <div class="play-stat"><span class="caps">spins</span><b class="mono" id="play-spins">0</b></div>
-            <div class="play-stat"><span class="caps">hit</span><b class="mono" id="play-hit">0%</b></div>
-            <div class="play-stat"><span class="caps">RTP sim</span><b class="mono" id="play-rtp-sim">0.00%</b></div>
+          <!-- Wave G10 — Screen-reader contract: aria-live on the win surface
+               so each post-spin payout is announced. polite (not assertive)
+               so it doesn't interrupt other announcements. atomic so the
+               full "Last win 5x" reads as one phrase rather than letter-by-letter. -->
+          <div class="play-info" role="group" aria-label="Spin results">
+            <div class="play-stat"><span class="caps">last win</span><b class="mono" id="play-win" aria-live="polite" aria-atomic="true" aria-label="Last win">0×</b></div>
+            <div class="play-stat"><span class="caps">spins</span><b class="mono" id="play-spins" aria-label="Spins counted">0</b></div>
+            <div class="play-stat"><span class="caps">hit</span><b class="mono" id="play-hit" aria-label="Hit frequency">0%</b></div>
+            <div class="play-stat"><span class="caps">RTP sim</span><b class="mono" id="play-rtp-sim" aria-label="Simulated RTP">0.00%</b></div>
           </div>
         </div>
         </div>

@@ -4606,3 +4606,24 @@ b.fail { color: var(--rose); }
     justify-content: center;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Wave G11 — Reduced-motion guard (prefers-reduced-motion: reduce)
+   WCAG 2.1 2.3.3 / Apple HIG / vestibular-safety best practice.
+
+   Strategy: kill all animations + transitions globally for users
+   who opted in to reduced motion at the OS level. Studio's grid
+   isn't motion-heavy by design, but tier-pulse / win-highlight /
+   tab-slide all use small transforms that can disturb sensitive
+   players. Single override at the bottom of the stylesheet so it
+   wins specificity wars against every existing rule.
+   ───────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}

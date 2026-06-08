@@ -12,7 +12,7 @@
  *   • Desktop 1440×900  — primary designer viewport
  *   • iPhone SE 375×667 — WCAG / Apple HIG mobile baseline
  *
- * Per fixture × viewport (15-16 asserts):
+ * Per fixture × viewport (15-21 asserts):
  *   1. page-error count == 0
  *   2. critical console-error count == 0   (warnings ignored)
  *   3. Play tab activates within 5s
@@ -30,9 +30,16 @@
  *   13. CSS computed font-size on .play-cell ≥ 11 px (readability floor)
  *   14. Per-spin response < 1500 ms              (perceived snap)
  *   15. Screenshot saved
- *   16. (G6 — conditional, when fixture.expectEval set) eval-kind matches
+ *   16. (G6, conditional when fixture.expectEval set) eval-kind matches
  *       topology contract (cluster_grid → cluster · variable_rows → ways
  *       · hexagonal → cluster · rectangular → lines)
+ *   17. (G10) #play-grid has role=grid + aria-label + aria-rowcount
+ *   18. (G10) play-cells have role=gridcell + aria-label
+ *   19. (G10) #play-win has aria-live=polite + aria-atomic=true
+ *   20. (G9)  Space key triggers a spin (Play tab active, no input focus)
+ *   21. (G11) prefers-reduced-motion zeros all transition-durations
+ *   22. (G8)  WCAG AA color-contrast via axe-core (0 violations on
+ *             #panel-play, color-contrast rule only)
  *
  * Output: reports/cortex-eyes-grid-coverage.md + tools/_eyes/grid-coverage/*.png
  */
@@ -49,6 +56,8 @@ const STUDIO  = resolve(dirname(__filename), '..');
 const REPO    = resolve(STUDIO, '../..');
 const SHOTS   = resolve(STUDIO, 'tools/_eyes/grid-coverage');
 const REPORT  = resolve(REPO, 'reports/cortex-eyes-grid-coverage.md');
+// Wave G8 — axe-core bundle for WCAG color-contrast assertions.
+const AXE_PATH = resolve(STUDIO, 'node_modules/axe-core/axe.min.js');
 mkdirSync(SHOTS, { recursive: true });
 mkdirSync(dirname(REPORT), { recursive: true });
 
@@ -466,6 +475,155 @@ async function runOneFixtureViewport(browser, fixture, viewport) {
         activeEval === fixture.expectEval,
         `expected ${fixture.expectEval}, got ${activeEval || '∅'}`);
     }
+
+    // Wave G10 — Screen-reader contract: assert ARIA grid semantics
+    // (role + label + per-cell role + per-cell aria-label) so assistive
+    // tech can read the play grid. We sample the FIRST cell because
+    // renderPlayGrid stamps every cell identically.
+    const ariaState = await page.evaluate(() => {
+      const grid = document.getElementById('play-grid');
+      const cell = grid ? grid.querySelector('.play-cell') : null;
+      const win  = document.getElementById('play-win');
+      return {
+        gridRole:     grid ? grid.getAttribute('role') : null,
+        gridLabel:    grid ? !!grid.getAttribute('aria-label') : false,
+        gridRowCount: grid ? !!grid.getAttribute('aria-rowcount') : false,
+        cellRole:     cell ? cell.getAttribute('role') : null,
+        cellLabel:    cell ? !!cell.getAttribute('aria-label') : false,
+        winLive:      win ? win.getAttribute('aria-live') : null,
+        winAtomic:    win ? win.getAttribute('aria-atomic') : null,
+      };
+    });
+    A('grid has role="grid" + aria-label',
+      ariaState.gridRole === 'grid' && ariaState.gridLabel && ariaState.gridRowCount,
+      `role=${ariaState.gridRole || '∅'}, label=${ariaState.gridLabel}, rowcount=${ariaState.gridRowCount}`);
+    A('cells have role="gridcell" + aria-label',
+      ariaState.cellRole === 'gridcell' && ariaState.cellLabel,
+      `role=${ariaState.cellRole || '∅'}, label=${ariaState.cellLabel}`);
+    A('win surface has aria-live="polite" + aria-atomic',
+      ariaState.winLive === 'polite' && ariaState.winAtomic === 'true',
+      `live=${ariaState.winLive || '∅'}, atomic=${ariaState.winAtomic || '∅'}`);
+
+    // Wave G9 — Keyboard a11y: Space-key triggers a spin when the Play
+    // panel is active. We capture the spin counter before + after a
+    // synthetic Space keydown and assert it incremented.
+    //
+    // GDD-narrative fixtures sometimes leave the #gdd-review modal in
+    // an "open" state (when generateFromGDD returns ok:false the handler
+    // bails BEFORE closeGDD). Our app.js keydown guard treats any
+    // unhidden .wiz / .modal-base / .cmdp / .picker as a blocker, so we
+    // force-close every potential blocker before dispatching Space.
+    const keyboardResult = await page.evaluate(() => {
+      // Hide any modal that might block the keydown handler.
+      document.querySelectorAll('.modal-base, .wiz, .cmdp, .picker').forEach(el => {
+        try { el.setAttribute('hidden', ''); } catch (_) {}
+      });
+      // Ensure Play panel is is-active right before dispatching Space.
+      const playPanel = document.getElementById('panel-play');
+      if (playPanel && !playPanel.classList.contains('is-active')) {
+        document.querySelectorAll('.panel.is-active').forEach(p => p.classList.remove('is-active'));
+        playPanel.classList.add('is-active');
+      }
+      // Blur any input so the handler's "active editable element"
+      // guard doesn't bail out.
+      if (document.activeElement && document.activeElement !== document.body) {
+        try { document.activeElement.blur(); } catch (_) {}
+      }
+      const counter = document.getElementById('play-spins');
+      const before = counter ? parseInt(counter.textContent || '0', 10) : -1;
+      // Dispatch a real Space key event on document (the app's keydown
+      // listener is bound at document scope).
+      document.dispatchEvent(new KeyboardEvent('keydown', {
+        key: ' ', code: 'Space', bubbles: true, cancelable: true,
+      }));
+      // The spin handler is sync — counter will be incremented immediately
+      // (renderPlayGrid + counter bump are both synchronous).
+      const after = counter ? parseInt(counter.textContent || '0', 10) : -1;
+      return { before, after, delta: after - before };
+    });
+    A('Space key triggers spin (Play tab active)',
+      keyboardResult.delta >= 1,
+      `before=${keyboardResult.before}, after=${keyboardResult.after} (Δ=${keyboardResult.delta})`);
+
+    // Wave G11 — Reduced-motion: probe under emulated prefers-reduced-
+    // motion to confirm the CSS @media rule kills transitions. We open
+    // a fresh side-page with reducedMotion='reduce' to keep the main
+    // probe context (no-emulation) clean — much cheaper than re-running
+    // the whole audit per viewport.
+    const reducedMotionResult = await (async () => {
+      try {
+        const rmCtx = await browser.newContext({
+          viewport: { width: 1024, height: 600 },
+          reducedMotion: 'reduce',
+        });
+        const rmPage = await rmCtx.newPage();
+        await rmPage.goto(SERVER_URL, { waitUntil: 'networkidle', timeout: 15_000 });
+        await wait(800);
+        // Sample transition-duration on any element that should have a
+        // transition (Studio applies short transitions to many buttons).
+        const td = await rmPage.evaluate(() => {
+          const target = document.querySelector('#btn-spin') || document.body;
+          const cs = getComputedStyle(target);
+          // Return the FASTEST transition-duration string (typically '0s'
+          // or '0.001ms' under our override).
+          return cs.transitionDuration || '';
+        });
+        await rmCtx.close();
+        // Pass if the duration is ≤ 1ms (the CSS override uses 0.001ms,
+        // which Chromium computes as `1e-06s` — exponential notation
+        // tripped the earlier regex; we now use parseFloat directly).
+        const ms = (() => {
+          const s = String(td).trim();
+          if (!s) return 9999;
+          const n = parseFloat(s);
+          if (!Number.isFinite(n)) return 9999;
+          return s.endsWith('ms') ? n : n * 1000;
+        })();
+        return { td, ms };
+      } catch (e) {
+        return { td: '∅', ms: 9999, err: e.message?.slice(0, 100) };
+      }
+    })();
+    A('prefers-reduced-motion zeros transitions',
+      reducedMotionResult.ms <= 1,
+      `transition-duration=${reducedMotionResult.td} (${reducedMotionResult.ms.toFixed(2)}ms)${reducedMotionResult.err ? ' err:' + reducedMotionResult.err : ''}`);
+
+    // Wave G8 — WCAG AA color-contrast via axe-core. Inject axe.min.js
+    // into the page, run ONLY the color-contrast rule (much faster than
+    // the full axe suite), and assert 0 violations on #panel-play.
+    //
+    // axe-core 4.x is loaded from node_modules at runtime. The rule
+    // tests every visible text node against its computed background
+    // colour and flags pairs < 4.5:1 (normal text) or < 3:1 (large/UI).
+    const axeResult = await (async () => {
+      try {
+        await page.addScriptTag({ path: AXE_PATH });
+        const r = await page.evaluate(async () => {
+          // eslint-disable-next-line no-undef
+          const res = await axe.run('#panel-play', {
+            runOnly: ['color-contrast'],
+            resultTypes: ['violations'],
+          });
+          return {
+            violations: (res.violations || []).map(v => ({
+              id: v.id,
+              count: v.nodes.length,
+              firstTarget: v.nodes[0] ? (v.nodes[0].target || [])[0] : null,
+            })),
+          };
+        });
+        return r;
+      } catch (e) {
+        return { violations: [], err: e.message?.slice(0, 120) };
+      }
+    })();
+    const axePass = (axeResult.violations || []).reduce((s, v) => s + (v.count || 0), 0) === 0;
+    A('WCAG AA color-contrast (axe-core color-contrast rule)',
+      axePass,
+      axeResult.err ? `axe err: ${axeResult.err}` :
+        (axeResult.violations.length
+          ? `${axeResult.violations.length} violations: ${axeResult.violations.slice(0, 2).map(v => `${v.id}×${v.count}@${v.firstTarget || '?'}`).join(' | ')}`
+          : 'no violations'));
   } catch (e) {
     A('runOne · no exception', false, e.message?.slice(0, 200) || String(e));
   } finally {

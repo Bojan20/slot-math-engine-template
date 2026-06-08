@@ -4547,14 +4547,29 @@
     const m = (v.layout || "5x3").match(/^(\d+)x(\d+)/);
     if (m) { reels = +m[1] || 5; rows = +m[2] || 3; }
     const total = reels * rows;
+    // Wave G10 — Screen-reader contract: stamp ARIA grid semantics so
+    // assistive tech reads the play grid as a 2D table of cells with
+    // tier + symbol labels. Defensive — re-stamped every render so
+    // class swaps in win-cycle don't strip the attributes.
+    grid.setAttribute('role', 'grid');
+    grid.setAttribute('aria-label', `Play grid ${reels}×${rows} ${(v.layout || '5x3')}`);
+    grid.setAttribute('aria-rowcount', String(rows));
+    grid.setAttribute('aria-colcount', String(reels));
     for (let i = 0; i < total; i++) {
       const reelIdx = i % reels;
+      const rowIdx  = Math.floor(i / reels);
       const s = _drawCellSymbol(pool, reelIdx, reels);
       if (!s) continue;
       const win = animateWin && Math.random() < 0.18;
       const cell = document.createElement("div");
       cell.className = `play-cell tier-${s.tier} ${win ? "is-win" : ""}`;
-      cell.innerHTML = `<svg><use href="#g-${s.icon}"/></svg>`;
+      // G10: per-cell ARIA — gridcell role + descriptive label so screen
+      // readers announce "High-value symbol Zeus, reel 1 row 1" etc.
+      cell.setAttribute('role', 'gridcell');
+      cell.setAttribute('aria-label', `${s.tier} ${s.name || s.id || ''} (reel ${reelIdx + 1} row ${rowIdx + 1})`.trim());
+      cell.setAttribute('aria-rowindex', String(rowIdx + 1));
+      cell.setAttribute('aria-colindex', String(reelIdx + 1));
+      cell.innerHTML = `<svg aria-hidden="true"><use href="#g-${s.icon}"/></svg>`;
       grid.appendChild(cell);
     }
   }
@@ -4779,6 +4794,32 @@
     $("#play-rtp-sim").textContent = ((playWinSum / playSpins) * 100).toFixed(2) + "%";
   }
   $("#btn-spin").addEventListener("click", spin);
+
+  // Wave G9 — Keyboard a11y: Space / Enter triggers a spin when the Play
+  // panel is the active tab and focus is NOT inside an editable field
+  // (otherwise we'd hijack the user typing in a config input).
+  //
+  // Industry convention: every certified slot UX binds Space to spin.
+  // The #btn-spin tooltip already advertises this ("Spin · Space").
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== ' ' && e.key !== 'Enter' && e.code !== 'Space') return;
+    // Skip if Play tab isn't active — spin shouldn't fire while user
+    // is on Build / Math / Compose etc.
+    const playPanel = document.getElementById('panel-play');
+    if (!playPanel || !playPanel.classList.contains('is-active')) return;
+    // Skip if focus is inside an editable surface (inputs, textareas,
+    // contenteditable nodes, select boxes) — preserves normal typing.
+    const ae = document.activeElement;
+    if (ae) {
+      const tag = (ae.tagName || '').toUpperCase();
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      if (ae.isContentEditable) return;
+    }
+    // Skip if a modal/menu is open (let the modal own its keys).
+    if (document.querySelector('.modal-base:not([hidden]), .wiz:not([hidden]), .cmdp:not([hidden]), .picker:not([hidden])')) return;
+    e.preventDefault();
+    spin();
+  });
   $("#btn-auto10").addEventListener("click", () => {
     let n = 0; const id = setInterval(() => { spin(); if (++n >= 10) clearInterval(id); }, 200);
   });

@@ -2,7 +2,7 @@
 
 **Boki imperative (2026-06-07)**: *"Qa, ui ux tehnicki, kompletan svakog grida, ukljuci cortex eyes"*.
 
-Run: 2026-06-07T23:47:03.138Z · Total: **308.1 s**
+Run: 2026-06-08T01:01:45.217Z · Total: **330.0 s**
 
 ## Headline
 
@@ -11,7 +11,7 @@ Run: 2026-06-07T23:47:03.138Z · Total: **308.1 s**
 | Fixtures audited | 20 |
 | Viewports per fixture | 2 (Desktop 1440×900 + iPhone SE 375×667) |
 | Asserts per fixture·viewport | up to 15 |
-| **PASS** | **750** |
+| **PASS** | **838** |
 | **FAIL** | **0** |
 | Pass rate | 100.0% |
 
@@ -19,56 +19,46 @@ Run: 2026-06-07T23:47:03.138Z · Total: **308.1 s**
 
 | Fixture | Viewport | Pass | Fail | Time | Failing assertions |
 |---|---|---:|---:|---:|---|
-| synth · synth-rect-5x3-shallow-lines | 1440×900 | 15 | 0 | 6286 ms | — |
-| synth · synth-rect-5x3-shallow-lines | iPhone SE | 15 | 0 | 6248 ms | — |
-| synth · synth-rect-5x3-shallow-ways | 1440×900 | 15 | 0 | 6058 ms | — |
-| synth · synth-rect-5x3-shallow-ways | iPhone SE | 15 | 0 | 6253 ms | — |
-| synth · synth-rect-5x3-deep-lines | 1440×900 | 15 | 0 | 6064 ms | — |
-| synth · synth-rect-5x3-deep-lines | iPhone SE | 15 | 0 | 6283 ms | — |
-| synth · synth-rect-5x3-deep-ways | 1440×900 | 15 | 0 | 6066 ms | — |
-| synth · synth-rect-5x3-deep-ways | iPhone SE | 15 | 0 | 6242 ms | — |
-| synth · synth-rect-5x4-shallow-lines | 1440×900 | 15 | 0 | 6060 ms | — |
-| synth · synth-rect-5x4-shallow-lines | iPhone SE | 15 | 0 | 6257 ms | — |
-| synth · synth-rect-5x4-shallow-ways | 1440×900 | 15 | 0 | 6066 ms | — |
-| synth · synth-rect-5x4-shallow-ways | iPhone SE | 15 | 0 | 6259 ms | — |
-| synth · synth-rect-5x4-deep-lines | 1440×900 | 15 | 0 | 6067 ms | — |
-| synth · synth-rect-5x4-deep-lines | iPhone SE | 15 | 0 | 6250 ms | — |
-| synth · synth-rect-5x4-deep-ways | 1440×900 | 15 | 0 | 6068 ms | — |
-| synth · synth-rect-5x4-deep-ways | iPhone SE | 15 | 0 | 6257 ms | — |
-| synth · synth-rect-6x4-shallow-lines | 1440×900 | 15 | 0 | 6076 ms | — |
-| synth · synth-rect-6x4-shallow-lines | iPhone SE | 15 | 0 | 6241 ms | — |
-| synth · synth-rect-6x4-shallow-ways | 1440×900 | 15 | 0 | 6058 ms | — |
-| synth · synth-rect-6x4-shallow-ways | iPhone SE | 15 | 0 | 6242 ms | — |
-| synth · synth-rect-6x4-deep-lines | 1440×900 | 15 | 0 | 6068 ms | — |
-| synth · synth-rect-6x4-deep-lines | iPhone SE | 15 | 0 | 6257 ms | — |
-| synth · synth-rect-6x4-deep-ways | 1440×900 | 15 | 0 | 6050 ms | — |
-| synth · synth-rect-6x4-deep-ways | iPhone SE | 15 | 0 | 6259 ms | — |
-| synth · synth-rect-7x5-shallow-lines | 1440×900 | 15 | 0 | 6057 ms | — |
-| synth · synth-rect-7x5-shallow-lines | iPhone SE | 15 | 0 | 6242 ms | — |
-| synth · synth-rect-7x5-shallow-ways | 1440×900 | 15 | 0 | 6067 ms | — |
-| synth · synth-rect-7x5-shallow-ways | iPhone SE | 15 | 0 | 6242 ms | — |
-| synth · synth-rect-7x5-deep-lines | 1440×900 | 15 | 0 | 6051 ms | — |
-| synth · synth-rect-7x5-deep-lines | iPhone SE | 15 | 0 | 6249 ms | — |
-| synth · synth-rect-7x5-deep-ways | 1440×900 | 15 | 0 | 6050 ms | — |
-| synth · synth-rect-7x5-deep-ways | iPhone SE | 15 | 0 | 6241 ms | — |
-| synth · synth-cluster-5x5-shallow | 1440×900 | 15 | 0 | 6050 ms | — |
-| synth · synth-cluster-5x5-shallow | iPhone SE | 15 | 0 | 6284 ms | — |
-| synth · synth-cluster-5x5-deep | 1440×900 | 15 | 0 | 6066 ms | — |
-| synth · synth-cluster-5x5-deep | iPhone SE | 15 | 0 | 6250 ms | — |
-| synth · synth-cluster-6x6-shallow | 1440×900 | 15 | 0 | 6049 ms | — |
-| synth · synth-cluster-6x6-shallow | iPhone SE | 15 | 0 | 6233 ms | — |
-| synth · synth-cluster-6x6-deep | 1440×900 | 15 | 0 | 6085 ms | — |
-| synth · synth-cluster-6x6-deep | iPhone SE | 15 | 0 | 6257 ms | — |
-| synth · synth-cluster-8x8-shallow | 1440×900 | 15 | 0 | 6057 ms | — |
-| synth · synth-cluster-8x8-shallow | iPhone SE | 15 | 0 | 6232 ms | — |
-| synth · synth-cluster-8x8-deep | 1440×900 | 15 | 0 | 6050 ms | — |
-| synth · synth-cluster-8x8-deep | iPhone SE | 15 | 0 | 6266 ms | — |
-| synth · synth-mega-6r-3-4-5-5-4-3 | 1440×900 | 15 | 0 | 6074 ms | — |
-| synth · synth-mega-6r-3-4-5-5-4-3 | iPhone SE | 15 | 0 | 6225 ms | — |
-| synth · synth-mega-6r-7-7-7-7-7-7 | 1440×900 | 15 | 0 | 6057 ms | — |
-| synth · synth-mega-6r-7-7-7-7-7-7 | iPhone SE | 15 | 0 | 6259 ms | — |
-| synth · synth-hex-ring3 | 1440×900 | 15 | 0 | 6065 ms | — |
-| synth · synth-hex-ring3 | iPhone SE | 15 | 0 | 6251 ms | — |
+| pilot · Wrath of Olympus | 1440×900 | 21 | 0 | 8004 ms | — |
+| pilot · Wrath of Olympus | iPhone SE | 21 | 0 | 7877 ms | — |
+| pilot · Quick Hit Platinum Phoenix | 1440×900 | 21 | 0 | 7889 ms | — |
+| pilot · Quick Hit Platinum Phoenix | iPhone SE | 21 | 0 | 7906 ms | — |
+| pilot · Spartacus Colossal | 1440×900 | 21 | 0 | 7826 ms | — |
+| pilot · Spartacus Colossal | iPhone SE | 21 | 0 | 7873 ms | — |
+| pilot · Rainbow Riches Megaways | 1440×900 | 21 | 0 | 7815 ms | — |
+| pilot · Rainbow Riches Megaways | iPhone SE | 21 | 0 | 7866 ms | — |
+| pilot · Huff N Puff Storm Cellar | 1440×900 | 21 | 0 | 7887 ms | — |
+| pilot · Huff N Puff Storm Cellar | iPhone SE | 21 | 0 | 7925 ms | — |
+| g4 · rectangular 3×3 | 1440×900 | 21 | 0 | 7853 ms | — |
+| g4 · rectangular 3×3 | iPhone SE | 21 | 0 | 7897 ms | — |
+| g4 · rectangular 5×4 | 1440×900 | 21 | 0 | 7878 ms | — |
+| g4 · rectangular 5×4 | iPhone SE | 21 | 0 | 7888 ms | — |
+| g4 · rectangular 6×4 | 1440×900 | 21 | 0 | 7856 ms | — |
+| g4 · rectangular 6×4 | iPhone SE | 21 | 0 | 7884 ms | — |
+| g4 · rectangular 7×5 | 1440×900 | 21 | 0 | 7853 ms | — |
+| g4 · rectangular 7×5 | iPhone SE | 21 | 0 | 7863 ms | — |
+| g4 · cluster 5×5 | 1440×900 | 21 | 0 | 7861 ms | — |
+| g4 · cluster 5×5 | iPhone SE | 21 | 0 | 7854 ms | — |
+| g4 · cluster 6×6 | 1440×900 | 21 | 0 | 7863 ms | — |
+| g4 · cluster 6×6 | iPhone SE | 21 | 0 | 7826 ms | — |
+| g4 · cluster 8×8 | 1440×900 | 21 | 0 | 7817 ms | — |
+| g4 · cluster 8×8 | iPhone SE | 21 | 0 | 7860 ms | — |
+| g4 · megaways 6-reel | 1440×900 | 21 | 0 | 7856 ms | — |
+| g4 · megaways 6-reel | iPhone SE | 21 | 0 | 7875 ms | — |
+| g4 · megaways 6-reel max | 1440×900 | 21 | 0 | 7863 ms | — |
+| g4 · megaways 6-reel max | iPhone SE | 21 | 0 | 7879 ms | — |
+| g4 · hexagonal ring-3 | 1440×900 | 21 | 0 | 7869 ms | — |
+| g4 · hexagonal ring-3 | iPhone SE | 21 | 0 | 7877 ms | — |
+| gdd · huff-puff.md | 1440×900 | 21 | 0 | 9465 ms | — |
+| gdd · huff-puff.md | iPhone SE | 21 | 0 | 9400 ms | — |
+| gdd · dragon-spin.json | 1440×900 | 21 | 0 | 9360 ms | — |
+| gdd · dragon-spin.json | iPhone SE | 21 | 0 | 9363 ms | — |
+| gdd · mega-cascade.json | 1440×900 | 21 | 0 | 9399 ms | — |
+| gdd · mega-cascade.json | iPhone SE | 21 | 0 | 9372 ms | — |
+| gdd · minimal-hnw.json | 1440×900 | 21 | 0 | 9361 ms | — |
+| gdd · minimal-hnw.json | iPhone SE | 21 | 0 | 9384 ms | — |
+| gdd · cluster-cosmic.txt | 1440×900 | 20 | 0 | 9375 ms | — |
+| gdd · cluster-cosmic.txt | iPhone SE | 20 | 0 | 9361 ms | — |
 
 ## Assertion matrix (per fixture × viewport)
 
@@ -78,69 +68,59 @@ Each cell shows ✓ or ✗ for the 15-point matrix:
 
 | Fixture | View | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
 |---|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| synth · synth-rect-5x3-shallow-lines | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x3-shallow-lines | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x3-shallow-ways | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x3-shallow-ways | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x3-deep-lines | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x3-deep-lines | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x3-deep-ways | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x3-deep-ways | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x4-shallow-lines | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x4-shallow-lines | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x4-shallow-ways | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x4-shallow-ways | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x4-deep-lines | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x4-deep-lines | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x4-deep-ways | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-5x4-deep-ways | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-6x4-shallow-lines | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-6x4-shallow-lines | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-6x4-shallow-ways | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-6x4-shallow-ways | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-6x4-deep-lines | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-6x4-deep-lines | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-6x4-deep-ways | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-6x4-deep-ways | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-7x5-shallow-lines | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-7x5-shallow-lines | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-7x5-shallow-ways | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-7x5-shallow-ways | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-7x5-deep-lines | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-7x5-deep-lines | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-7x5-deep-ways | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-rect-7x5-deep-ways | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-cluster-5x5-shallow | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-cluster-5x5-shallow | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-cluster-5x5-deep | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-cluster-5x5-deep | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-cluster-6x6-shallow | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-cluster-6x6-shallow | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-cluster-6x6-deep | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-cluster-6x6-deep | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-cluster-8x8-shallow | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-cluster-8x8-shallow | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-cluster-8x8-deep | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-cluster-8x8-deep | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-mega-6r-3-4-5-5-4-3 | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-mega-6r-3-4-5-5-4-3 | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-mega-6r-7-7-7-7-7-7 | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-mega-6r-7-7-7-7-7-7 | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-hex-ring3 | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| synth · synth-hex-ring3 | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| pilot · Wrath of Olympus | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| pilot · Wrath of Olympus | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| pilot · Quick Hit Platinum Phoenix | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| pilot · Quick Hit Platinum Phoenix | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| pilot · Spartacus Colossal | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| pilot · Spartacus Colossal | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| pilot · Rainbow Riches Megaways | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| pilot · Rainbow Riches Megaways | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| pilot · Huff N Puff Storm Cellar | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| pilot · Huff N Puff Storm Cellar | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · rectangular 3×3 | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · rectangular 3×3 | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · rectangular 5×4 | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · rectangular 5×4 | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · rectangular 6×4 | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · rectangular 6×4 | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · rectangular 7×5 | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · rectangular 7×5 | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · cluster 5×5 | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · cluster 5×5 | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · cluster 6×6 | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · cluster 6×6 | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · cluster 8×8 | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · cluster 8×8 | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · megaways 6-reel | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · megaways 6-reel | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · megaways 6-reel max | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · megaways 6-reel max | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · hexagonal ring-3 | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| g4 · hexagonal ring-3 | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| gdd · huff-puff.md | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| gdd · huff-puff.md | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| gdd · dragon-spin.json | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| gdd · dragon-spin.json | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| gdd · mega-cascade.json | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| gdd · mega-cascade.json | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| gdd · minimal-hnw.json | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| gdd · minimal-hnw.json | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| gdd · cluster-cosmic.txt | desktop | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| gdd · cluster-cosmic.txt | mobile | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
 ## Tier distribution (averaged across fixtures & viewports)
 
 | Tier | Count | Visible-freq |
 |---|---:|---:|
-| HP | 1805 | 8.02% |
-| MP | 6660 | 29.60% |
-| LP | 13319 | 59.20% |
-| WILD | 434 | 1.93% |
-| SCATTER | 282 | 1.25% |
-| MULT | 0 | 0.00% |
+| HP | 1878 | 10.43% |
+| MP | 4330 | 24.06% |
+| LP | 11016 | 61.20% |
+| WILD | 430 | 2.39% |
+| SCATTER | 220 | 1.22% |
+| MULT | 126 | 0.70% |
 
-Aggregate scatter trigger rate: **0.27%** across 1500 spins (industry baseline 1–3%).
+Aggregate scatter trigger rate: **0.08%** across 1200 spins (industry baseline 1–3%).
 
 ## Screenshots
 
