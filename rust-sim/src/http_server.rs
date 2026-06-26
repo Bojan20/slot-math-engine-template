@@ -240,6 +240,18 @@ pub struct SpinRequest {
     /// TS comparison runs. Defaults to false.
     #[serde(default)]
     pub sequential: Option<bool>,
+    /// PAR-6 (Boki 2026-06-26): total bet in millicredits per spin.
+    /// Defaults to 1_000 (= 1.0 credit, matches `slot_sim --quick` CLI
+    /// default). The factory PAR-5 convergence solver overrides this
+    /// with `paylines × 1_000` (industry "bet per line × N lines"
+    /// convention) so paytable pay multipliers — which scale against
+    /// per-line bet — produce a measured RTP comparable to declared.
+    /// Without the override, all 5 par sheets converged ~100-1000× too
+    /// high because the engine treated pay × total_bet instead of
+    /// pay × per_line_bet. Range: 1..1_000_000_000 (1 mc to 1M credit
+    /// spin). Outside the range → 400 with code `bet_out_of_range`.
+    #[serde(default)]
+    pub total_bet_mc: Option<i64>,
 }
 
 /// `POST /spin` response. Includes:
@@ -289,6 +301,9 @@ pub struct BatchItem {
     pub seed: Option<u64>,
     #[serde(default)]
     pub sequential: Option<bool>,
+    /// PAR-6: per-item total bet override (mirrors SpinRequest field).
+    #[serde(default)]
+    pub total_bet_mc: Option<i64>,
 }
 
 /// `POST /batch` response. `results.len()` may be less than
@@ -370,6 +385,11 @@ async fn handler_spin(
         return resp;
     }
 
+    let total_bet_mc = match validate_total_bet(req.total_bet_mc) {
+        Ok(v) => v,
+        Err(resp) => return resp,
+    };
+
     let permit = match state.inflight_permits.clone().acquire_owned().await {
         Ok(p) => p,
         Err(_) => return server_error("inflight semaphore closed", "permit_closed"),
@@ -379,7 +399,7 @@ async fn handler_spin(
         spins_per_seed: spins,
         num_seeds: seeds,
         base_seed,
-        total_bet_mc: DEFAULT_TOTAL_BET_MC,
+        total_bet_mc,
         verbose: false,
         sequential,
     };
@@ -492,11 +512,41 @@ async fn handler_batch(
             }
         };
 
+        let item_total_bet = match validate_total_bet(item.total_bet_mc) {
+            Ok(v) => v,
+            Err(_) => {
+                /* Per-item bet-out-of-range: surface as a per-item error
+                 * rather than poisoning the whole batch. Pre-validation
+                 * earlier in the handler already caught run-size faults
+                 * for every item, so this branch only fires when a
+                 * caller mixes legit + out-of-range bets in one batch. */
+                results.push(BatchResult {
+                    id: item.id.clone(),
+                    ok: false,
+                    rtp: None,
+                    hits: None,
+                    spins: None,
+                    hit_rate: None,
+                    latency_ms: 0,
+                    summary: None,
+                    error: Some(format!(
+                        "total_bet_mc out of range (1..=1_000_000_000): {:?}",
+                        item.total_bet_mc
+                    )),
+                });
+                failure_count += 1;
+                drop(permit);
+                if req.stop_on_error {
+                    break;
+                }
+                continue;
+            }
+        };
         let sim_config = SimConfig {
             spins_per_seed: spins,
             num_seeds: seeds,
             base_seed,
-            total_bet_mc: DEFAULT_TOTAL_BET_MC,
+            total_bet_mc: item_total_bet,
             verbose: false,
             sequential,
         };
@@ -625,6 +675,21 @@ fn validate_run_size(opts: &ServerOptions, spins: u64, seeds: u32) -> Result<(),
             "total_spins_overflow",
         )),
         _ => Ok(()),
+    }
+}
+
+/// PAR-6: normalize + validate the optional `total_bet_mc` override.
+/// `None` → DEFAULT_TOTAL_BET_MC (preserves backwards-compat with
+/// existing LV3-1 / LV3-2 callers that never sent the field).
+/// Out of [1, 1_000_000_000] mc → 400 with code `bet_out_of_range`.
+fn validate_total_bet(v: Option<i64>) -> Result<i64, Response> {
+    match v {
+        None => Ok(DEFAULT_TOTAL_BET_MC),
+        Some(b) if b >= 1 && b <= 1_000_000_000 => Ok(b),
+        Some(b) => Err(bad_request(
+            format!("total_bet_mc out of range (1..=1_000_000_000): {}", b),
+            "bet_out_of_range",
+        )),
     }
 }
 
@@ -971,6 +1036,201 @@ mod tests {
         let v = body_json(resp).await;
         assert_eq!(v["code"], "item_invalid_size");
         assert!(v["error"].as_str().unwrap().contains("item[1]"));
+    }
+
+    #[tokio::test]
+    async fn spin_accepts_total_bet_mc_override() {
+        // PAR-6: factory passes paylines × 1_000 to scale paytable
+        // pays correctly. A custom 20_000 mc (20-line × 1 credit per
+        // line) override must not be rejected by validate_total_bet,
+        // must not regress the SUMMARY shape, and must produce a
+        // valid 2xx response.
+        let opts = ServerOptions {
+            max_total_spins_per_request: 50_000,
+            max_seeds_per_request: 4,
+            max_batch_items: 4,
+            max_body_bytes: 1024 * 1024,
+            max_concurrent_runs: 2,
+        };
+        let app = router(opts);
+        let payload = json!({
+            "config": minimal_config_json(),
+            "spins": 200,
+            "seeds": 1,
+            "sequential": true,
+            "total_bet_mc": 20_000,
+        });
+        let resp = app
+            .oneshot(
+                Request::builder()
+                    .method("POST")
+                    .uri("/spin")
+                    .header("content-type", "application/json")
+                    .body(Body::from(serde_json::to_vec(&payload).unwrap()))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(resp.status(), StatusCode::OK);
+        let v = body_json(resp).await;
+        assert_eq!(v["ok"], true);
+        assert!(v["summary"].as_str().unwrap().starts_with("SUMMARY|rtp="));
+    }
+
+    #[tokio::test]
+    async fn spin_rejects_total_bet_below_one() {
+        let app = router(ServerOptions::default());
+        let payload = json!({
+            "config": minimal_config_json(),
+            "spins": 100,
+            "seeds": 1,
+            "total_bet_mc": 0,
+        });
+        let resp = app
+            .oneshot(
+                Request::builder()
+                    .method("POST")
+                    .uri("/spin")
+                    .header("content-type", "application/json")
+                    .body(Body::from(serde_json::to_vec(&payload).unwrap()))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(resp.status(), StatusCode::BAD_REQUEST);
+        let v = body_json(resp).await;
+        assert_eq!(v["code"], "bet_out_of_range");
+    }
+
+    #[tokio::test]
+    async fn spin_rejects_total_bet_above_cap() {
+        let app = router(ServerOptions::default());
+        let payload = json!({
+            "config": minimal_config_json(),
+            "spins": 100,
+            "seeds": 1,
+            "total_bet_mc": 1_000_000_001_i64,
+        });
+        let resp = app
+            .oneshot(
+                Request::builder()
+                    .method("POST")
+                    .uri("/spin")
+                    .header("content-type", "application/json")
+                    .body(Body::from(serde_json::to_vec(&payload).unwrap()))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(resp.status(), StatusCode::BAD_REQUEST);
+        let v = body_json(resp).await;
+        assert_eq!(v["code"], "bet_out_of_range");
+    }
+
+    #[tokio::test]
+    async fn batch_per_item_total_bet_override_applies() {
+        let opts = ServerOptions {
+            max_total_spins_per_request: 50_000,
+            max_seeds_per_request: 4,
+            max_batch_items: 4,
+            max_body_bytes: 1024 * 1024,
+            max_concurrent_runs: 2,
+        };
+        let app = router(opts);
+        let cfg = minimal_config_json();
+        let payload = json!({
+            "items": [
+                {"id": "a", "config": cfg, "spins": 100, "seeds": 1,
+                 "sequential": true, "total_bet_mc": 10_000},
+                {"id": "b", "config": cfg, "spins": 100, "seeds": 1,
+                 "sequential": true, "total_bet_mc": 25_000}
+            ]
+        });
+        let resp = app
+            .oneshot(
+                Request::builder()
+                    .method("POST")
+                    .uri("/batch")
+                    .header("content-type", "application/json")
+                    .body(Body::from(serde_json::to_vec(&payload).unwrap()))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(resp.status(), StatusCode::OK);
+        let v = body_json(resp).await;
+        assert_eq!(v["success_count"], 2);
+        assert_eq!(v["failure_count"], 0);
+    }
+
+    #[tokio::test]
+    async fn batch_mixed_bet_validity_isolates_failure() {
+        let opts = ServerOptions {
+            max_total_spins_per_request: 50_000,
+            max_seeds_per_request: 4,
+            max_batch_items: 4,
+            max_body_bytes: 1024 * 1024,
+            max_concurrent_runs: 2,
+        };
+        let app = router(opts);
+        let cfg = minimal_config_json();
+        // First item: legit. Second: bet out of range. Without
+        // stop_on_error the legit one must still pass; the bad one
+        // surfaces as a per-item error, not a whole-batch 400.
+        let payload = json!({
+            "items": [
+                {"id": "a", "config": cfg, "spins": 100, "seeds": 1,
+                 "sequential": true, "total_bet_mc": 5_000},
+                {"id": "b", "config": cfg, "spins": 100, "seeds": 1,
+                 "sequential": true, "total_bet_mc": 0}
+            ]
+        });
+        let resp = app
+            .oneshot(
+                Request::builder()
+                    .method("POST")
+                    .uri("/batch")
+                    .header("content-type", "application/json")
+                    .body(Body::from(serde_json::to_vec(&payload).unwrap()))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(resp.status(), StatusCode::OK);
+        let v = body_json(resp).await;
+        assert_eq!(v["success_count"], 1);
+        assert_eq!(v["failure_count"], 1);
+        let bad = v["results"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|r| r["id"] == "b")
+            .unwrap();
+        assert_eq!(bad["ok"], false);
+        assert!(bad["error"]
+            .as_str()
+            .unwrap()
+            .contains("total_bet_mc out of range"));
+    }
+
+    #[test]
+    fn validate_total_bet_normalizes_none_to_default() {
+        let v = validate_total_bet(None).expect("None must be valid");
+        assert_eq!(v, DEFAULT_TOTAL_BET_MC);
+    }
+
+    #[test]
+    fn validate_total_bet_accepts_band() {
+        for b in [1_i64, 1_000, 20_000, 1_000_000_000] {
+            assert!(validate_total_bet(Some(b)).is_ok(), "rejected legit {b}");
+        }
+    }
+
+    #[test]
+    fn validate_total_bet_rejects_oob() {
+        assert!(validate_total_bet(Some(0)).is_err());
+        assert!(validate_total_bet(Some(-1)).is_err());
+        assert!(validate_total_bet(Some(1_000_000_001)).is_err());
     }
 
     #[test]
