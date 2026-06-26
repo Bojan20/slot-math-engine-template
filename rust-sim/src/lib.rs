@@ -103,3 +103,9 @@ pub mod protocols;
 /// `tools/math_dsl/*.py` closed-form kernels. Byte-identical output
 /// (within float epsilon) verified via Python parity tests.
 pub mod kernels;
+/// LV3-2 (MATH-INTEGRATION-LV3) — long-lived Axum HTTP simulator daemon.
+/// Gated behind the `http` feature so pure-engine consumers (wasm /
+/// gpu / no-net builds) don't pull axum + tokio into their compile
+/// graph. See `Cargo.toml` `[features] http = [...]`.
+#[cfg(feature = "http")]
+pub mod http_server;

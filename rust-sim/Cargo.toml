@@ -46,6 +46,25 @@ num-rational = { version = "0.4", default-features = false, features = ["num-big
 num-bigint = "0.4"
 num-traits = "0.2"
 
+# LV3-2 (MATH-INTEGRATION-LV3) — long-lived HTTP simulator daemon. Lets
+# the auto-converge solver in `slot-gdd-factory` issue thousands of
+# parameter probes without paying the per-spawn process-setup cost. Axum
+# 0.7 + tower 0.5 are both MSRV ≥ 1.75 (we're pinned at 1.80) and avoid
+# edition2024-dependent transitive deps (h3 / printpdf / time 0.3.47+),
+# matching the policy that keeps the wider toolchain on stable 1.83. The
+# tokio feature set is the minimal subset axum needs at runtime:
+#   - macros        → `#[tokio::main]` in the http_server bin
+#   - rt-multi-thread → parallel request handling
+#   - net           → TcpListener bind for axum::serve
+#   - signal        → graceful SIGINT/SIGTERM shutdown
+#   - time          → request-timeout middleware
+# Optional `http` feature gates the server out of the default build so
+# pure-engine consumers (wasm-oracle, gpu kernels) don't pay the axum
+# compile-time cost. The `http_server` binary explicitly requires it.
+axum = { version = "0.7", default-features = false, features = ["http1", "json", "tokio", "tower-log"], optional = true }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "signal", "time"], optional = true }
+tower = { version = "0.5", default-features = false, optional = true }
+
 # PAR-009 — PDF generator: emitted as PDF-ready Markdown (pandoc-converted
 # downstream). Avoids printpdf 0.7+ which pulls time 0.3.47 → edition2024
 # (requires Rust 1.88+, our toolchain is pinned at 1.83 across CI).
@@ -56,6 +75,11 @@ num-traits = "0.2"
 [features]
 default = []
 gpu = []
+# LV3-2 long-lived HTTP simulator daemon. Gates the `http_server` module +
+# `http_server` bin behind a feature flag so wasm/no-net consumers don't
+# pull axum/tokio into their build graph. Enabled via `cargo build
+# --features http --bin http_server` or `--all-features` in CI.
+http = ["dep:axum", "dep:tokio", "dep:tower"]
 
 [dev-dependencies]
 # Benchmark harness with HTML reports and regression detection
@@ -65,6 +89,14 @@ criterion = { version = "0.5", features = ["html_reports"] }
 proptest = "= 1.4.0"
 # Explicit pin so proptest's rusty-fork does not resolve to tempfile 3.13+
 tempfile = "= 3.12.0"
+
+# LV3-2 — long-lived Axum HTTP daemon entry point. Only compiles with
+# `--features http`; default builds skip it so the toolchain matrix
+# (wasm-oracle / gpu / no_std consumers) stays clean.
+[[bin]]
+name = "http_server"
+path = "src/bin/http_server.rs"
+required-features = ["http"]
 
 [[bench]]
 name = "spin_throughput"
