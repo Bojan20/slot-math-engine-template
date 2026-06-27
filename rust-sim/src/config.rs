@@ -77,6 +77,32 @@ pub struct HoldAndWinConfig {
     pub orb_values: Vec<OrbValue>,
     pub orb_land_chance_base: f64,
     pub orb_land_chance_fill_bonus: f64,
+    /// PAR-14-E sister-side feature #3: Multi-scenario HnW.
+    ///
+    /// Per-scenario overrides keyed by INITIAL bonus_count (i.e. how
+    /// many orbs landed on the trigger spin). When present, sister's
+    /// `simulate_hnw` picks the matching scenario instead of the
+    /// top-level chance / orb_values. Falls back to top-level params
+    /// when no scenario matches.
+    ///
+    /// Cash Eruption has distinct tables for 6/7/8 Fireballs landed
+    /// (PAR-001 r3970-r4030+). Each scenario has its own chance,
+    /// respin count, and orb distribution.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub scenarios: Vec<HoldAndWinScenario>,
+}
+
+/// PAR-14-E #3: per-initial-orb-count override branch for HnW.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct HoldAndWinScenario {
+    /// Initial bonus_count this scenario activates on (e.g. 6 = "6
+    /// Fireballs landed"). Single integer match.
+    pub initial_count: u8,
+    pub initial_respins: u8,
+    pub respins_on_new_orb: u8,
+    pub orb_values: Vec<OrbValue>,
+    pub orb_land_chance_base: f64,
+    pub orb_land_chance_fill_bonus: f64,
 }
 
 /// Lightning feature configuration
@@ -528,6 +554,7 @@ impl Default for GameConfig {
                 ],
                 orb_land_chance_base: 0.035,
                 orb_land_chance_fill_bonus: 0.015,
+                scenarios: Vec::new(),
             },
             lightning: LightningConfig {
                 trigger_chance: 0.15,

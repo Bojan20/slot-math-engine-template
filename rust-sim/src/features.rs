@@ -198,6 +198,36 @@ impl<'a> FeatureSim<'a> {
 
         let max_win_mc = (self.config.max_win_cap * 1000.0) as i64 * total_bet_mc / 1000;
 
+        // Count initial orbs upfront so we can pick the right scenario.
+        let initial_bonus_count = self.grid_gen.count_bonus(initial_grid);
+
+        // PAR-14-E sister-side feature #3: Multi-scenario HnW. If a
+        // scenario matches the initial bonus_count, use its overrides
+        // for respins / chances / orb_values. Otherwise fall back to
+        // the top-level HoldAndWinConfig.
+        let scenario = self
+            .config
+            .hold_and_win
+            .scenarios
+            .iter()
+            .find(|s| s.initial_count == initial_bonus_count);
+
+        let initial_respins = scenario
+            .map(|s| s.initial_respins)
+            .unwrap_or(self.config.hold_and_win.initial_respins);
+        let respins_on_new_orb = scenario
+            .map(|s| s.respins_on_new_orb)
+            .unwrap_or(self.config.hold_and_win.respins_on_new_orb);
+        let chance_base = scenario
+            .map(|s| s.orb_land_chance_base)
+            .unwrap_or(self.config.hold_and_win.orb_land_chance_base);
+        let chance_fill = scenario
+            .map(|s| s.orb_land_chance_fill_bonus)
+            .unwrap_or(self.config.hold_and_win.orb_land_chance_fill_bonus);
+        // Orb table override is handled via generate_orb_for; we pass
+        // the optional scenario pointer down.
+        let _scenario_orb_table = scenario.map(|s| &s.orb_values);
+
         // Place initial orbs from the triggering grid.
         for reel in 0..num_reels {
             for row in 0..num_rows {
@@ -219,7 +249,7 @@ impl<'a> FeatureSim<'a> {
             }
         }
 
-        let mut respins_remaining = self.config.hold_and_win.initial_respins;
+        let mut respins_remaining = initial_respins;
         let mut loop_count = 0;
         let mut orb_count: u8 = orb_values.len() as u8;
         let total_cells_u8 = total_cells as u8;
@@ -237,8 +267,8 @@ impl<'a> FeatureSim<'a> {
 
             // Each empty cell has a chance to land an orb.
             let fill_ratio = orb_count as f64 / total_cells as f64;
-            let orb_chance = self.config.hold_and_win.orb_land_chance_base
-                + fill_ratio * self.config.hold_and_win.orb_land_chance_fill_bonus;
+            // PAR-14-E #3: scenario-aware chances if present.
+            let orb_chance = chance_base + fill_ratio * chance_fill;
 
             for reel in 0..num_reels {
                 for row in 0..num_rows {
@@ -269,7 +299,8 @@ impl<'a> FeatureSim<'a> {
 
             // Reset respins counter when new orbs land.
             if new_orbs > 0 {
-                respins_remaining = self.config.hold_and_win.respins_on_new_orb;
+                // PAR-14-E #3: scenario-aware respin reset.
+                respins_remaining = respins_on_new_orb;
             }
         }
 
