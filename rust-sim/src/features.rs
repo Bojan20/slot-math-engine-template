@@ -130,8 +130,30 @@ impl<'a> FeatureSim<'a> {
             spins_remaining -= 1;
             result.spins_played += 1;
 
-            // Generate FS grid
-            let grid = self.grid_gen.generate_fs(rng);
+            // PAR-14-E #5 — Special Reel Set per-FS-round.
+            // When the config carries non-empty special_reel_sets, pick
+            // one weighted-random and generate the FS grid using that
+            // set's reel weights. Otherwise fall back to the default
+            // fs_weights via generate_fs.
+            let grid = {
+                let sets = &self.config.free_spins.special_reel_sets;
+                if sets.is_empty() {
+                    self.grid_gen.generate_fs(rng)
+                } else {
+                    let total_w: u32 = sets.iter().map(|s| s.weight).sum();
+                    if total_w == 0 {
+                        self.grid_gen.generate_fs(rng)
+                    } else {
+                        let mut roll = rng.random() * total_w as f64;
+                        let mut picked = &sets[0];
+                        for s in sets {
+                            roll -= s.weight as f64;
+                            if roll <= 0.0 { picked = s; break; }
+                        }
+                        self.grid_gen.generate_fs_with_set(rng, &picked.reels)
+                    }
+                }
+            };
 
             // Check retrigger
             let scatters = self.grid_gen.count_scatters(&grid);

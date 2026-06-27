@@ -186,6 +186,57 @@ impl<'a> GridGenerator<'a> {
         self.generate_grid(rng, true)
     }
 
+    /// PAR-14-E #5 — Generate an FS grid using an EXPLICIT reel-weight
+    /// set (e.g. a Special Reel Set picked per FS round). Mirrors the
+    /// internal generate_grid loop but takes the weight tables from
+    /// the caller instead of fs_weights.
+    ///
+    /// `reels_input` is `Vec<Vec<ReelWeight>>` shape (per reel: ordered
+    /// list of {symbol_id, weight}). Symbol IDs are resolved via the
+    /// config's symbol_index lookup; reels with unknown symbols silently
+    /// drop those weights. Reels with empty totals are left at sentinel.
+    pub fn generate_fs_with_set(
+        &self,
+        rng: &mut SlotRng,
+        reels_input: &[Vec<crate::config::ReelWeight>],
+    ) -> Grid {
+        let num_reels = self.config.reels as usize;
+        let num_rows = self.config.rows as usize;
+        let mut grid = DynGrid::new(num_reels, num_rows);
+
+        for reel in 0..num_reels {
+            let Some(reel_strip) = reels_input.get(reel) else { continue };
+
+            // Resolve symbol indices + total.
+            let mut resolved: Vec<(u8, u32)> = Vec::with_capacity(reel_strip.len());
+            let mut total: u32 = 0;
+            for entry in reel_strip {
+                if let Some(idx) = self.config.symbol_index(&entry.symbol) {
+                    resolved.push((idx as u8, entry.weight));
+                    total = total.saturating_add(entry.weight);
+                }
+            }
+            if total == 0 {
+                continue;
+            }
+
+            let reel_rows = grid.rows_for_reel(reel);
+            for row in 0..reel_rows {
+                let mut roll = rng.random() * total as f64;
+                let mut chosen = 0u8;
+                for &(sym_idx, weight) in &resolved {
+                    roll -= weight as f64;
+                    if roll <= 0.0 {
+                        chosen = sym_idx;
+                        break;
+                    }
+                }
+                grid.set(reel, row, chosen);
+            }
+        }
+        grid
+    }
+
     /// Generate a variable-rows grid: each reel may have a different row
     /// count for this spin. `row_counts.len()` must equal `config.reels`.
     /// The resulting `DynGrid` allocates the *maximum* row count across
