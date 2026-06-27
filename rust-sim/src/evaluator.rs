@@ -759,6 +759,19 @@ impl<'a> Evaluator<'a> {
     ) -> SpinResult {
         let mut result = SpinResult::default();
 
+        // PAR-14-E #6 — Apply Coin Boost multipliers on grid cells
+        // BEFORE wild expand & mystery reveal so the multipliers stay
+        // attached to their original coin-boost positions throughout
+        // subsequent transforms (those operations replace symbols,
+        // but our multiplier storage is positional and survives).
+        let coin_boosted_grid;
+        let grid: &Grid = if !self.config.coin_boost_multipliers.is_empty() {
+            coin_boosted_grid = grid.apply_coin_boost(rng, self.config);
+            &coin_boosted_grid
+        } else {
+            grid
+        };
+
         // PAR-14-E sister-side feature #4 — Wild Expand.
         // Apply before Mystery reveal so revealed symbols on expanded
         // wild reels still see them as wild.
@@ -824,6 +837,28 @@ impl<'a> Evaluator<'a> {
 
         result.line_wins = line_wins;
         result.base_win = base_win;
+
+        // PAR-14-E #6 — Coin Boost multiplier on base_win.
+        // Coarse approximation: multiply base_win by the product of
+        // every distinct multiplier on the grid (each >1 contributes).
+        // Strict per-line semantics require evaluator hooks per line
+        // path — future refinement once factory provides Coin Boost
+        // input data.
+        if !grid.multipliers.is_empty() && base_win > 0 {
+            let mut mult_product: u64 = 1;
+            for r in 0..grid.reels {
+                for c in 0..grid.rows_for_reel(r) {
+                    let m = grid.multiplier_at(r, c);
+                    if m > 1 {
+                        mult_product = mult_product.saturating_mul(m as u64);
+                    }
+                }
+            }
+            if mult_product > 1 {
+                let boosted = (base_win as u64).saturating_mul(mult_product) as i64;
+                result.base_win = boosted;
+            }
+        }
 
         // Count special symbols (grid-wide, evaluation-mode-agnostic).
         result.scatter_count = self.grid_gen.count_scatters(grid);

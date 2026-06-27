@@ -20,6 +20,12 @@ pub struct DynGrid {
     pub reels: usize,
     /// Maximum row count (uniform for rectangular topology).
     pub rows: usize,
+    /// PAR-14-E #6 — Per-cell Coin Boost multiplier values. Parallel
+    /// to `cells`; 1 = no multiplier (default), value > 1 means
+    /// "this cell multiplies line pays crossing it by `value`".
+    /// Empty Vec when feature is not active.
+    #[doc(hidden)]
+    pub multipliers: Vec<Vec<u32>>,
 }
 
 impl DynGrid {
@@ -29,6 +35,33 @@ impl DynGrid {
             cells: vec![vec![0u8; rows]; reels],
             reels,
             rows,
+            multipliers: Vec::new(),
+        }
+    }
+
+    /// PAR-14-E #6 — Read the Coin Boost multiplier at `[reel][row]`.
+    /// Returns 1 (no multiplier) when feature is not active or cell
+    /// has no boost value.
+    #[inline]
+    pub fn multiplier_at(&self, reel: usize, row: usize) -> u32 {
+        self.multipliers
+            .get(reel)
+            .and_then(|r| r.get(row))
+            .copied()
+            .unwrap_or(1)
+            .max(1)
+    }
+
+    /// PAR-14-E #6 — Set the Coin Boost multiplier at `[reel][row]`.
+    /// Lazily initializes the parallel storage on first use.
+    pub fn set_multiplier(&mut self, reel: usize, row: usize, val: u32) {
+        if self.multipliers.is_empty() {
+            self.multipliers = vec![vec![1u32; self.rows]; self.reels];
+        }
+        if let Some(r) = self.multipliers.get_mut(reel) {
+            if let Some(cell) = r.get_mut(row) {
+                *cell = val.max(1);
+            }
         }
     }
 
@@ -57,6 +90,54 @@ impl DynGrid {
     #[inline]
     pub fn rows_for_reel(&self, _reel: usize) -> usize {
         self.rows
+    }
+
+    /// PAR-14-E sister-side feature #6 — Populate Coin Boost
+    /// multipliers on every cell that carries an `is_coin_boost`
+    /// symbol. Multiplier value is drawn from
+    /// `config.coin_boost_multipliers` (weighted). Cells without Coin
+    /// Boost are left at default 1.
+    pub fn apply_coin_boost(
+        &self,
+        rng: &mut crate::rng::SlotRng,
+        config: &crate::config::GameConfig,
+    ) -> DynGrid {
+        if config.coin_boost_multipliers.is_empty() {
+            return self.clone();
+        }
+        let coin_boost_idxs: Vec<u8> = config
+            .symbols
+            .iter()
+            .enumerate()
+            .filter(|(_, s)| s.is_coin_boost)
+            .map(|(i, _)| i as u8)
+            .collect();
+        if coin_boost_idxs.is_empty() {
+            return self.clone();
+        }
+        let total_w: u32 = config.coin_boost_multipliers.iter().map(|m| m.weight).sum();
+        if total_w == 0 {
+            return self.clone();
+        }
+        let mut out = self.clone();
+        for reel in 0..out.reels {
+            for row in 0..out.rows_for_reel(reel) {
+                let sym = out.get(reel, row);
+                if coin_boost_idxs.contains(&sym) {
+                    let mut roll = rng.random() * total_w as f64;
+                    let mut value = 1u32;
+                    for m in &config.coin_boost_multipliers {
+                        roll -= m.weight as f64;
+                        if roll <= 0.0 {
+                            value = m.value;
+                            break;
+                        }
+                    }
+                    out.set_multiplier(reel, row, value);
+                }
+            }
+        }
+        out
     }
 
     /// PAR-14-E sister-side feature #4 — Wild Expand spatial mechanic.
