@@ -691,6 +691,7 @@ mod tests {
                     is_scatter: false,
                     is_bonus: false,
                 is_mystery: false,
+            is_coin_boost: false,
             },
                 SymbolDef {
                     id: "H1".to_string(),
@@ -699,6 +700,7 @@ mod tests {
                     is_scatter: false,
                     is_bonus: false,
                 is_mystery: false,
+            is_coin_boost: false,
             },
                 SymbolDef {
                     id: "L1".to_string(),
@@ -707,6 +709,7 @@ mod tests {
                     is_scatter: false,
                     is_bonus: false,
                 is_mystery: false,
+            is_coin_boost: false,
             },
                 SymbolDef {
                     id: "S".to_string(),
@@ -715,6 +718,7 @@ mod tests {
                     is_scatter: true,
                     is_bonus: false,
                 is_mystery: false,
+            is_coin_boost: false,
             },
                 SymbolDef {
                     id: "B".to_string(),
@@ -723,6 +727,7 @@ mod tests {
                     is_scatter: false,
                     is_bonus: true,
                 is_mystery: false,
+            is_coin_boost: false,
             },
             ],
             paytable,

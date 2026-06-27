@@ -27,6 +27,16 @@ pub struct SymbolDef {
     /// post-reveal grid.
     #[serde(default)]
     pub is_mystery: bool,
+    /// PAR-14-E sister-side feature #6: Coin Boost multiplier symbol.
+    ///
+    /// When set, every cell carrying this symbol on the spin grid
+    /// holds a multiplier value (drawn from a per-symbol distribution
+    /// — see `coin_multiplier_distribution` on GameConfig). Line wins
+    /// crossing a Coin Boost cell are multiplied by the cell's value.
+    /// Matches Fortune Coin Boost / Buffalo Link / Wonder 4 Boost
+    /// semantics. Mutually exclusive with is_wild/is_scatter/is_bonus.
+    #[serde(default)]
+    pub is_coin_boost: bool,
 }
 
 /// Paytable entry - pays for 3, 4, 5 of a kind
@@ -110,6 +120,13 @@ pub struct HoldAndWinConfig {
     /// respin count, and orb distribution.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub scenarios: Vec<HoldAndWinScenario>,
+}
+
+/// PAR-14-E #6: Coin Boost multiplier weighted entry.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CoinBoostMultiplier {
+    pub value: u32,
+    pub weight: u32,
 }
 
 /// PAR-14-E #3: per-initial-orb-count override branch for HnW.
@@ -418,6 +435,17 @@ pub struct GameConfig {
     pub max_win_cap: f64,
     pub feature_loop_cap: u32,
 
+    /// PAR-14-E sister-side feature #6: Coin Boost multiplier distribution.
+    ///
+    /// When non-empty, sister's grid generator attaches a multiplier
+    /// value to every is_coin_boost cell drawn from this weighted
+    /// distribution. Line evaluation then multiplies the line's pay
+    /// by product of multipliers on participating Coin Boost cells.
+    ///
+    /// Empty by default — games without Coin Boost behave unchanged.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub coin_boost_multipliers: Vec<CoinBoostMultiplier>,
+
     /// PAR-14-E sister-side feature #4: Wild Expand spatial mechanic.
     ///
     /// When `true`, after grid generation every reel that contains at
@@ -515,7 +543,8 @@ impl Default for GameConfig {
                     is_scatter: false,
                     is_bonus: false,
                 is_mystery: false,
-            },
+            is_coin_boost: false,
+                },
                 SymbolDef {
                     id: "H1".to_string(),
                     name: "High 1".to_string(),
@@ -523,7 +552,8 @@ impl Default for GameConfig {
                     is_scatter: false,
                     is_bonus: false,
                 is_mystery: false,
-            },
+            is_coin_boost: false,
+                },
                 SymbolDef {
                     id: "L1".to_string(),
                     name: "Low 1".to_string(),
@@ -531,7 +561,8 @@ impl Default for GameConfig {
                     is_scatter: false,
                     is_bonus: false,
                 is_mystery: false,
-            },
+            is_coin_boost: false,
+                },
                 SymbolDef {
                     id: "S".to_string(),
                     name: "Scatter".to_string(),
@@ -539,7 +570,8 @@ impl Default for GameConfig {
                     is_scatter: true,
                     is_bonus: false,
                 is_mystery: false,
-            },
+            is_coin_boost: false,
+                },
                 SymbolDef {
                     id: "B".to_string(),
                     name: "Bonus".to_string(),
@@ -547,7 +579,8 @@ impl Default for GameConfig {
                     is_scatter: false,
                     is_bonus: true,
                 is_mystery: false,
-            },
+            is_coin_boost: false,
+                },
             ],
             paytable: HashMap::new(),
             base_weights: vec![],
@@ -627,6 +660,7 @@ impl Default for GameConfig {
             feature_loop_cap: 100,
             bonus_buy_mode: false,
             wild_expand_mode: false,
+            coin_boost_multipliers: Vec::new(),
         }
     }
 }

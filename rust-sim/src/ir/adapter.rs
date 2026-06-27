@@ -161,6 +161,7 @@ fn convert_symbols(ir: &SlotGameIR) -> Vec<SymbolDef> {
                 is_scatter,
                 is_bonus,
                 is_mystery: false,
+            is_coin_boost: false,
             }
         })
         .collect()
