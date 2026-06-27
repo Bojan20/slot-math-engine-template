@@ -65,6 +65,26 @@ pub struct FreeSpinsConfig {
     pub mult_max: u32,
     pub retrigger_enabled: bool,
     pub scatter_pays: HashMap<u8, f64>, // scatter_count -> pay multiplier
+    /// PAR-14-E sister-side feature #5: Special Reel Set.
+    ///
+    /// Per-FS-round alternate reel-weight tables. When non-empty,
+    /// every FS spin draws from a weighted random selection of reel
+    /// sets here instead of the default `fs_weights`. Matches
+    /// Skeleton Key Special Reel Set FS bonus where each FS round
+    /// can use a different higher-RTP reel set than base.
+    ///
+    /// Each entry holds the selection weight + the per-reel
+    /// `Vec<ReelWeight>` strip stack for that set. Empty by default
+    /// — sister falls back to top-level fs_weights.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub special_reel_sets: Vec<SpecialReelSet>,
+}
+
+/// PAR-14-E #5: weighted alternate reel set for FS.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SpecialReelSet {
+    pub weight: u32,
+    pub reels: Vec<Vec<ReelWeight>>,
 }
 
 /// Hold & Win configuration
@@ -539,6 +559,7 @@ impl Default for GameConfig {
                 mult_max: 10,
                 retrigger_enabled: true,
                 scatter_pays: HashMap::from([(3, 2.0), (4, 5.0), (5, 20.0)]),
+                special_reel_sets: Vec::new(),
             },
             hold_and_win: HoldAndWinConfig {
                 trigger_count: 6,

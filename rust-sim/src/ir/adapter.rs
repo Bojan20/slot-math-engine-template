@@ -611,6 +611,7 @@ fn convert_free_spins(
         mult_max,
         retrigger_enabled,
         scatter_pays,
+        special_reel_sets: Vec::new(),
     }
 }
 
