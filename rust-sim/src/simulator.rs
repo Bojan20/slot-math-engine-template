@@ -70,6 +70,20 @@ fn simulate_seed(config: &GameConfig, seed: u64, spins: u64, total_bet_mc: i64) 
     for _ in 0..spins {
         wagered += total_bet_mc;
 
+        // PAR-14-E (Boki 2026-06-27): Bonus Buy mode — skip base game
+        // and route every spin straight to FS simulation as if the
+        // player bought in. The elevated bet (total_bet_mc) is
+        // already configured at request time; we just redirect flow.
+        if config.bonus_buy_mode {
+            // Simulate a 3-scatter trigger directly. `scatter_count`
+            // can be lifted to use weighted bonus tier selection in
+            // future (e.g. Sweet Bonanza Bonus Buy with 4-scatter
+            // premium tier). Default 3 = standard award schedule.
+            let fs = feature_sim.simulate_free_spins(&mut rng, 3, total_bet_mc);
+            won += fs.total_payout;
+            continue;
+        }
+
         // Generate base game grid
         let grid = grid_gen.generate_base(&mut rng);
 

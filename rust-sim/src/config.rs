@@ -361,6 +361,21 @@ pub struct GameConfig {
     // Limits
     pub max_win_cap: f64,
     pub feature_loop_cap: u32,
+
+    // PAR-14-E (Boki 2026-06-27, native sister-side feature path):
+    // Bonus Buy MODE flag. When `true`, the simulator skips base game
+    // line evaluation entirely and routes every spin straight to the
+    // Free Spins / Bonus simulation as if the player bought in. Used
+    // to model Bonus Buy variant par sheets (Book of Unseen Bonus Buy,
+    // Sweet Bonanza Bonus Buy, etc.) without the factory-side
+    // scatter_pays scaling hack.
+    //
+    // Cost model: per industry convention, Bonus Buy total bet is
+    // `cost_x × base_total_bet` (typically 100×). The `total_bet_mc`
+    // field already carries the elevated bet at request time, so this
+    // flag only needs to redirect spin flow.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub bonus_buy_mode: bool,
 }
 
 impl GameConfig {
@@ -537,6 +552,7 @@ impl Default for GameConfig {
             pattern: None,
             max_win_cap: 5000.0,
             feature_loop_cap: 100,
+            bonus_buy_mode: false,
         }
     }
 }
