@@ -398,6 +398,16 @@ pub struct GameConfig {
     pub max_win_cap: f64,
     pub feature_loop_cap: u32,
 
+    /// PAR-14-E sister-side feature #4: Wild Expand spatial mechanic.
+    ///
+    /// When `true`, after grid generation every reel that contains at
+    /// least one Wild cell has ALL its cells filled with Wild before
+    /// line evaluation. Sister applies Grid::apply_wild_expand() in
+    /// evaluate_spin. Matches Skeleton Key / NetEnt Mega Joker
+    /// expanding-wild semantics.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub wild_expand_mode: bool,
+
     // PAR-14-E (Boki 2026-06-27, native sister-side feature path):
     // Bonus Buy MODE flag. When `true`, the simulator skips base game
     // line evaluation entirely and routes every spin straight to the
@@ -595,6 +605,7 @@ impl Default for GameConfig {
             max_win_cap: 5000.0,
             feature_loop_cap: 100,
             bonus_buy_mode: false,
+            wild_expand_mode: false,
         }
     }
 }

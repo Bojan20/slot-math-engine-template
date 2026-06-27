@@ -59,6 +59,35 @@ impl DynGrid {
         self.rows
     }
 
+    /// PAR-14-E sister-side feature #4 — Wild Expand spatial mechanic.
+    ///
+    /// When a Wild lands anywhere on a reel, every cell on that reel
+    /// is filled with Wild. Matches Skeleton Key / NetEnt Mega Joker
+    /// expanding-wild semantics. Sister evaluator then evaluates the
+    /// post-expand grid using normal line / ways logic.
+    ///
+    /// Returns a new grid; original is preserved for scatter / bonus
+    /// counts and reveal-style features that operate on raw symbols.
+    pub fn apply_wild_expand(&self, wild_idx: u8) -> DynGrid {
+        let mut out = self.clone();
+        for reel in 0..out.reels {
+            let mut has_wild = false;
+            let rows = out.rows_for_reel(reel);
+            for row in 0..rows {
+                if out.get(reel, row) == wild_idx {
+                    has_wild = true;
+                    break;
+                }
+            }
+            if has_wild {
+                for row in 0..rows {
+                    out.set(reel, row, wild_idx);
+                }
+            }
+        }
+        out
+    }
+
     /// PAR-14-E sister-side feature #2 — Mystery Reveal.
     ///
     /// Returns a new grid with every Mystery cell replaced by a single

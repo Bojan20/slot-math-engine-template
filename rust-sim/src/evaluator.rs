@@ -759,6 +759,21 @@ impl<'a> Evaluator<'a> {
     ) -> SpinResult {
         let mut result = SpinResult::default();
 
+        // PAR-14-E sister-side feature #4 — Wild Expand.
+        // Apply before Mystery reveal so revealed symbols on expanded
+        // wild reels still see them as wild.
+        let expanded_grid;
+        let grid: &Grid = if self.config.wild_expand_mode {
+            if let Some(wild_idx) = self.config.symbols.iter().position(|s| s.is_wild).map(|i| i as u8) {
+                expanded_grid = grid.apply_wild_expand(wild_idx);
+                &expanded_grid
+            } else {
+                grid
+            }
+        } else {
+            grid
+        };
+
         // PAR-14-E sister-side feature #2 — Mystery Reveal.
         //
         // If any symbol is flagged `is_mystery`, replace every Mystery
