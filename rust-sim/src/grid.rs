@@ -58,6 +58,39 @@ impl DynGrid {
     pub fn rows_for_reel(&self, _reel: usize) -> usize {
         self.rows
     }
+
+    /// PAR-14-E sister-side feature #2 — Mystery Reveal.
+    ///
+    /// Returns a new grid with every Mystery cell replaced by a single
+    /// shared random LP/MP paying symbol drawn uniformly from the
+    /// supplied payable symbol indices. Matches Skeleton Key / Mystic
+    /// Reels semantics: ALL Mystery cells on the spin reveal as the
+    /// SAME symbol per spin (sharing the same RNG draw).
+    ///
+    /// If no Mystery cells are present or no payable symbols supplied,
+    /// returns a clone of `self` unchanged.
+    pub fn apply_mystery_reveal(
+        &self,
+        mystery_idx: u8,
+        payable_idxs: &[u8],
+        rng: &mut crate::rng::SlotRng,
+    ) -> DynGrid {
+        let mut out = self.clone();
+        if payable_idxs.is_empty() {
+            return out;
+        }
+        // Single shared draw — every Mystery cell reveals as the SAME symbol.
+        let pick_idx = (rng.random() * payable_idxs.len() as f64) as usize;
+        let revealed = payable_idxs[pick_idx.min(payable_idxs.len() - 1)];
+        for reel in 0..out.reels {
+            for row in 0..out.rows_for_reel(reel) {
+                if out.get(reel, row) == mystery_idx {
+                    out.set(reel, row, revealed);
+                }
+            }
+        }
+        out
+    }
 }
 
 // ─── Type alias ────────────────────────────────────────────────────────────

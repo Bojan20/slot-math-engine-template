@@ -759,18 +759,52 @@ impl<'a> Evaluator<'a> {
     ) -> SpinResult {
         let mut result = SpinResult::default();
 
+        // PAR-14-E sister-side feature #2 — Mystery Reveal.
+        //
+        // If any symbol is flagged `is_mystery`, replace every Mystery
+        // cell on the grid with a single shared random payable symbol
+        // (uniformly drawn from non-special paying symbols) BEFORE
+        // line evaluation. Matches Skeleton Key / Mystic Reels / etc.
+        // semantics. Sister kernel then runs normal eval over the
+        // post-reveal grid as if Mystery never existed.
+        let revealed_grid;
+        let eval_grid: &Grid = if let Some(mystery_idx) = self
+            .config
+            .symbols
+            .iter()
+            .position(|s| s.is_mystery)
+            .map(|i| i as u8)
+        {
+            // Collect payable LP/MP symbol indices (anything that isn't
+            // a Wild/Scatter/Bonus/Mystery special).
+            let payable_idxs: Vec<u8> = self
+                .config
+                .symbols
+                .iter()
+                .enumerate()
+                .filter(|(_, s)| {
+                    !s.is_wild && !s.is_scatter && !s.is_bonus && !s.is_mystery
+                })
+                .map(|(i, _)| i as u8)
+                .collect();
+            revealed_grid = grid.apply_mystery_reveal(mystery_idx, &payable_idxs, rng);
+            &revealed_grid
+        } else {
+            grid
+        };
+
         // Dispatch to the correct evaluation mode.
         let (line_wins, base_win) = match &self.eval_mode {
-            EvalMode::Lines => self.evaluate_lines(grid, total_bet_mc),
-            EvalMode::Ways => self.evaluate_ways(grid, total_bet_mc),
-            EvalMode::Cluster { min_size } => self.evaluate_cluster(grid, *min_size, total_bet_mc),
+            EvalMode::Lines => self.evaluate_lines(eval_grid, total_bet_mc),
+            EvalMode::Ways => self.evaluate_ways(eval_grid, total_bet_mc),
+            EvalMode::Cluster { min_size } => self.evaluate_cluster(eval_grid, *min_size, total_bet_mc),
             EvalMode::PayAnywhere { min_count } => {
-                self.evaluate_pay_anywhere(grid, *min_count, total_bet_mc)
+                self.evaluate_pay_anywhere(eval_grid, *min_count, total_bet_mc)
             }
             EvalMode::VariableWays { row_counts } => {
-                self.evaluate_variable_ways(grid, row_counts, total_bet_mc)
+                self.evaluate_variable_ways(eval_grid, row_counts, total_bet_mc)
             }
-            EvalMode::Pattern { rules } => self.evaluate_pattern(grid, rules, total_bet_mc),
+            EvalMode::Pattern { rules } => self.evaluate_pattern(eval_grid, rules, total_bet_mc),
         };
 
         result.line_wins = line_wins;

@@ -17,6 +17,16 @@ pub struct SymbolDef {
     pub is_scatter: bool,
     #[serde(default)]
     pub is_bonus: bool,
+    /// PAR-14-E sister-side feature #2: Mystery reveal.
+    /// When `true`, every cell carrying this symbol on the spin grid
+    /// is REPLACED by a single random LP/MP paying symbol (uniformly
+    /// drawn from the paytable) BEFORE evaluation. Matches Skeleton
+    /// Key / Mystery Reels / Mystic Reels / etc. mechanics where
+    /// Mystery symbols reveal as a single shared payable symbol per
+    /// spin. Sister evaluator then runs normal line eval over the
+    /// post-reveal grid.
+    #[serde(default)]
+    pub is_mystery: bool,
 }
 
 /// Paytable entry - pays for 3, 4, 5 of a kind
@@ -448,35 +458,40 @@ impl Default for GameConfig {
                     is_wild: true,
                     is_scatter: false,
                     is_bonus: false,
-                },
+                is_mystery: false,
+            },
                 SymbolDef {
                     id: "H1".to_string(),
                     name: "High 1".to_string(),
                     is_wild: false,
                     is_scatter: false,
                     is_bonus: false,
-                },
+                is_mystery: false,
+            },
                 SymbolDef {
                     id: "L1".to_string(),
                     name: "Low 1".to_string(),
                     is_wild: false,
                     is_scatter: false,
                     is_bonus: false,
-                },
+                is_mystery: false,
+            },
                 SymbolDef {
                     id: "S".to_string(),
                     name: "Scatter".to_string(),
                     is_wild: false,
                     is_scatter: true,
                     is_bonus: false,
-                },
+                is_mystery: false,
+            },
                 SymbolDef {
                     id: "B".to_string(),
                     name: "Bonus".to_string(),
                     is_wild: false,
                     is_scatter: false,
                     is_bonus: true,
-                },
+                is_mystery: false,
+            },
             ],
             paytable: HashMap::new(),
             base_weights: vec![],
